@@ -1,1 +1,25 @@
-
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111827"><link rel="manifest" href="/static/manifest.json">
+<title>Scanner Drive 86</title><style>
+*{box-sizing:border-box}body{margin:0;background:#f3f4f6;color:#111827;font-family:system-ui,-apple-system,Segoe UI,sans-serif}
+header{background:#111827;color:white;padding:22px 18px 18px;position:sticky;top:0;z-index:2}
+h1{margin:0;font-size:23px}.sub{opacity:.75;font-size:13px;margin-top:4px}
+main{max-width:760px;margin:auto;padding:14px}.btn{width:100%;border:0;border-radius:14px;padding:15px;background:#111827;color:#fff;font-size:16px;font-weight:700}
+.status{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}.card{background:white;border-radius:15px;padding:14px;box-shadow:0 2px 10px #0000000b}.label{font-size:12px;color:#6b7280}.big{font-size:19px;font-weight:800;margin-top:4px}
+.store{display:flex;align-items:center;gap:9px;padding:10px 0;border-bottom:1px solid #eee}.dot{width:10px;height:10px;border-radius:50%;background:#16a34a}
+.alert{margin:10px 0;padding:15px;border-radius:16px;background:white;border-left:6px solid #ef4444;box-shadow:0 2px 10px #0000000b}.name{font-weight:800;font-size:16px}.meta{font-size:12px;color:#6b7280;margin-top:4px}.price{font-size:22px;font-weight:900;margin:8px 0}.ref{text-decoration:line-through;color:#6b7280;font-size:13px}.score{display:inline-block;background:#fee2e2;color:#991b1b;padding:4px 8px;border-radius:99px;font-weight:800;font-size:12px}
+a{display:block;text-align:center;margin-top:9px;color:#2563eb;text-decoration:none;font-weight:700}.note{font-size:12px;color:#6b7280;line-height:1.45;margin:15px 3px}
+</style></head><body><header><h1>🔎 Scanner Bugs Drive 86</h1><div class="sub">Auchan • Intermarché • Leclerc</div></header>
+<main><button class="btn" onclick="scan()">🔄 Scanner maintenant</button>
+<div class="status"><div class="card"><div class="label">Dernier scan</div><div id="last" class="big">—</div></div><div class="card"><div class="label">Alertes détectées</div><div id="nb" class="big">—</div></div></div>
+<div class="card"><b>Drives surveillés</b><div id="stores"></div></div>
+<h2>🚨 Anomalies</h2><div id="alerts">Chargement…</div>
+<div class="note">Une alerte indique une anomalie à vérifier directement dans le Drive. Le scanner ne passe aucune commande et ne garantit pas qu'un prix sera honoré.</div>
+</main><script>
+async function load(){let s=await fetch('/api/status').then(r=>r.json());document.getElementById('last').textContent=s.last_scan?s.last_scan.replace('T',' '):'Jamais';document.getElementById('nb').textContent=s.alerts;
+document.getElementById('stores').innerHTML=s.stores.map(x=>`<div class="store"><span class="dot"></span>${x.name}</div>`).join('');
+let a=await fetch('/api/alerts').then(r=>r.json());document.getElementById('alerts').innerHTML=a.length?a.map(x=>`<div class="alert"><div class="name">${x.name}</div><div class="meta">${x.store} · ${x.ts.replace('T',' ')}</div><div class="price">${x.price.toFixed(2)} € <span class="ref">réf. ${x.reference.toFixed(2)} €</span></div><span class="score">${x.score.toFixed(0)}/100</span><div class="meta">${x.reason}</div>${x.url?`<a href="${x.url}" target="_blank">Ouvrir le Drive →</a>`:''}</div>`).join(''):'<div class="card">Aucune anomalie détectée pour le moment.</div>'}
+async function scan(){let b=document.querySelector('.btn');b.disabled=true;b.textContent='⏳ Scan en cours…';try{await fetch('/api/scan',{method:'POST'});await load()}finally{b.disabled=false;b.textContent='🔄 Scanner maintenant'}}
+load();setInterval(load,60000);
+</script></body></html>
