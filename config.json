@@ -1,0 +1,36 @@
+{
+  "scan_interval_minutes": 120,
+  "alert_threshold_score": 80,
+  "stores": [
+    {
+      "id": "auchan_chasseneuil",
+      "name": "Auchan Chasseneuil",
+      "brand": "auchan",
+      "url": "https://www.auchan.fr/magasins/drive/auchan-drive-chasseneuil-du-poitou/s-862",
+      "enabled": true
+    },
+    {
+      "id": "auchan_sud",
+      "name": "Auchan Poitiers Sud",
+      "brand": "auchan",
+      "url": "https://www.auchan.fr/magasins/drive/auchan-drive-poitiers/s-939",
+      "enabled": true
+    },
+    {
+      "id": "intermarche_demi_lune",
+      "name": "Intermarché Poitiers Demi-Lune",
+      "brand": "intermarche",
+      "url": "",
+      "enabled": true
+    },
+    {
+      "id": "leclerc_nord",
+      "name": "E.Leclerc Poitiers Nord",
+      "brand": "leclerc",
+      "url": "https://www.leclercdrive.fr/region-nouvelle-aquitaine/poitiers/drive-poitiers-nord.aspx",
+      "enabled": true
+    }
+  ],
+  "telegram_bot_token": "",
+  "telegram_chat_id": ""
+}

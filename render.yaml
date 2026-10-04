@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: scanner-drive-86
+    env: docker
+    plan: free
+    healthCheckPath: /
