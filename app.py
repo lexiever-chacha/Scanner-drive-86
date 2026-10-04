@@ -8,7 +8,6 @@ from playwright.async_api import async_playwright
 
 DB=ROOT/"prices.sqlite3"
 CFG=json.loads((ROOT/"config.json").read_text(encoding="utf-8"))
-DB=ROOT/"data/prices.sqlite3"
 app=Flask(__name__)
 
 def db():
