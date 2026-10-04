@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 from playwright.async_api import async_playwright
 
 DB=ROOT/"prices.sqlite3"
+ROOT=Path(__file__).parent
 CFG=json.loads((ROOT/"config.json").read_text(encoding="utf-8"))
 app=Flask(__name__)
 
